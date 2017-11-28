@@ -1,0 +1,46 @@
+{
+    "id": "1d2eb5f4-e86d-401a-a0f5-d691458ff93d",
+    "name": "Paket",
+    "friendlyName": "Paket",
+    "description": "Add, install, restore, remove packeges using paket.exe",
+    "helpMarkDown": "",
+    "category": "Packaging",
+    "author": "Sander Aernouts",
+    "version": {
+        "Major": 0,
+        "Minor": 1,
+        "Patch": 0
+    },
+    "instanceNameFormat": "Paket $(samplestring)",
+    "groups": [
+        {
+            "name": "advanced",
+            "displayName": "Advanced",
+            "isExpanded": false
+        }
+    ],
+    "inputs": [
+        {
+            "name": "command",
+            "type": "pickList",
+            "label": "Command",
+            "defaultValue": "build",
+            "required": true,
+            "helpMarkDown": "The paket command to run. Select 'Custom' to add arguments or use a command not listed here.",
+            "options": {
+                "restore": "restore",
+                "install": "install",
+                "update": "update",
+                "custom": "custom"
+            },
+            "properties": {
+                "EditableOptions": "False"
+            }
+        }
+    ],
+    "execution": {
+        "Node": {
+            "target": "index.js"
+        }
+    }
+}

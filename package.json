@@ -1,0 +1,27 @@
+{
+  "name": "vsts-paket-tasks",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanderaernouts/vsts-paket-tasks.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sanderaernouts/vsts-paket-tasks/issues"
+  },
+  "homepage": "https://github.com/sanderaernouts/vsts-paket-tasks#readme",
+  "dependencies": {
+    "vsts-task-lib": "^2.1.0",
+    "vsts-task-tool-lib": "^0.4.1"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.53",
+    "@types/q": "^1.0.6"
+  }
+}
