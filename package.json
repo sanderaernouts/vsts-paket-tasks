@@ -17,11 +17,13 @@
   },
   "homepage": "https://github.com/sanderaernouts/vsts-paket-tasks#readme",
   "dependencies": {
+    "@types/mocha": "^2.2.44",
     "vsts-task-lib": "^2.1.0",
     "vsts-task-tool-lib": "^0.4.1"
   },
   "devDependencies": {
     "@types/node": "^8.0.53",
-    "@types/q": "^1.0.6"
+    "@types/q": "^1.0.6",
+    "mocha": "^4.0.1"
   }
 }

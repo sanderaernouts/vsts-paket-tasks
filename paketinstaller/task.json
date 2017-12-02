@@ -23,9 +23,9 @@
             "name": "version",
             "type": "string",
             "label": "Version",
-            "defaultValue": "1.0.4",
+            "defaultValue": "5.123.1",
             "required": true,
-            "helpMarkDown": "Specify exact version of Paket to install."
+            "helpMarkDown": "Specify exact version of Paket to install. See https://github.com/fsprojects/Paket/releases for the released versions."
         }
     ],
     "execution": {

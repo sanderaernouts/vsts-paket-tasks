@@ -7,4 +7,4 @@ async function run() {
     console.log(taskLib.loc("ToolToInstall Paket", version));
 }
 
-run()
+run();
