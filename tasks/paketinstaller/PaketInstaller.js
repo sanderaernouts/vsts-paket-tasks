@@ -8,11 +8,23 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const taskLib = require("vsts-task-lib/task");
-function run() {
-    return __awaiter(this, void 0, void 0, function* () {
-        let version = taskLib.getInput('version', true).trim();
-        console.log(taskLib.loc("ToolToInstall Paket", version));
-    });
+class PaketInstaller {
+    constructor(toolLib, logger) {
+        this.cachedToolName = "pkcli";
+        this.toolLib = toolLib;
+        this.logger = logger;
+    }
+    run(options) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                let localTool = this.toolLib.findLocalTool(this.cachedToolName, options.version);
+                if (!localTool) {
+                    debugger;
+                    this.toolLib.downloadTool("bla");
+                }
+                resolve();
+            });
+        });
+    }
 }
-run();
+exports.PaketInstaller = PaketInstaller;
