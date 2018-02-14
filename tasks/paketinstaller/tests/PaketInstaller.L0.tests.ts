@@ -28,7 +28,7 @@ describe('L0', () => {
         });
 
         describe ('constructor', function() {
-            it('must create an instance when options are passed.', function(done: MochaDone) {
+            it('creates an instance when options are passed.', function(done: MochaDone) {
                 let installer = new PaketInstaller(toolLibMock.object, loggerMock.object);
                 
                 expect(installer).to.not.equal(null);
@@ -51,7 +51,7 @@ describe('L0', () => {
 
             });
 
-            it('must check local tools cache for requested version', async function() {
+            it('checks local tools cache for requested version', async function() {
                 //arrange
                 let expectedVersion = "3.5.6"
                 let expectedToolName = "pkcli"
@@ -64,9 +64,9 @@ describe('L0', () => {
                 toolLibMock.verify(t => t.findLocalTool(TypeMoq.It.isValue(expectedToolName), TypeMoq.It.isValue(expectedVersion)), TypeMoq.Times.once());
             });
 
-            it('must not download tool if requested version is found in local tools cache', async function() {
+            it('does not download tool when requested version is found in local tools cache', async function() {
                 //arrange
-                toolLibMock.setup(t => t.findLocalTool(TypeMoq.It.isAnyString(), TypeMoq.It.isAnyString())).returns(() => { debugger; return "c:\\some\\fake\\path\\";});
+                toolLibMock.setup(t => t.findLocalTool(TypeMoq.It.isAnyString(), TypeMoq.It.isAnyString())).returns(() => "c:\\some\\fake\\path\\");
 
                 //act
                 await sut.run(defaultOptions);
@@ -75,7 +75,7 @@ describe('L0', () => {
                 toolLibMock.verify(t => t.downloadTool(TypeMoq.It.isAnyString()), TypeMoq.Times.never());
             });
 
-            it('must download tool if requested version is not found in local tools cache', async function() {
+            it('downloads tool when requested version is not found in local tools cache', async function() {
                 //arrange
 
                 //act

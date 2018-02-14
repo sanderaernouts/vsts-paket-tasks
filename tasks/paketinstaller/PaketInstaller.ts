@@ -17,7 +17,6 @@ export class PaketInstaller {
             let localTool = this.toolLib.findLocalTool(this.cachedToolName, options.version);
 
             if(!localTool) {
-                debugger;
                 this.toolLib.downloadTool("bla");
             }
 

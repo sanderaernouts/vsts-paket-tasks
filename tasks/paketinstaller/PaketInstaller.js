@@ -19,7 +19,6 @@ class PaketInstaller {
             return new Promise((resolve, reject) => {
                 let localTool = this.toolLib.findLocalTool(this.cachedToolName, options.version);
                 if (!localTool) {
-                    debugger;
                     this.toolLib.downloadTool("bla");
                 }
                 resolve();
