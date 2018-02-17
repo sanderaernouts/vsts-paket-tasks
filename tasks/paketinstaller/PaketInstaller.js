@@ -9,20 +9,42 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 class PaketInstaller {
-    constructor(toolLib, logger) {
+    constructor(toolLib, logger, resolver) {
         this.cachedToolName = "pkcli";
         this.toolLib = toolLib;
         this.logger = logger;
+        this.resolver = resolver;
     }
-    run(options) {
+    run(version) {
         return __awaiter(this, void 0, void 0, function* () {
-            return new Promise((resolve, reject) => {
-                let localTool = this.toolLib.findLocalTool(this.cachedToolName, options.version);
-                if (!localTool) {
-                    this.toolLib.downloadTool("bla");
-                }
-                resolve();
-            });
+            this.getPaket(version);
+        });
+    }
+    getPaket(version) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var downloadUrl = yield this.resolver.resolve(version);
+            // check cache
+            let toolPath;
+            toolPath = this.toolLib.findLocalTool(this.cachedToolName, downloadUrl.version);
+            if (!toolPath) {
+                this.logger.log(`installing paket.exe`);
+                toolPath = yield this.acquirePaket(downloadUrl);
+            }
+            else {
+                this.logger.log(`using cached tool ${toolPath}`);
+            }
+            // prepend the tools path. instructs the agent to prepend for future tasks
+            this.toolLib.prependPath(toolPath);
+        });
+    }
+    acquirePaket(downloadUrl) {
+        return __awaiter(this, void 0, void 0, function* () {
+            var downloadPath = yield this.toolLib.downloadTool(downloadUrl.url);
+            // cache tool
+            this.logger.log("caching tool");
+            let cachedDir = yield this.toolLib.cacheDir(downloadPath, this.cachedToolName, downloadUrl.version);
+            this.logger.log(`successfully installed Paket version ${downloadUrl.version}`);
+            return cachedDir;
         });
     }
 }

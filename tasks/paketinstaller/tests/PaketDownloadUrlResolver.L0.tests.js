@@ -8,9 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const PaketDownloadUrl_1 = require("../PaketDownloadUrl");
 const chai_1 = require("chai");
 const TypeMoq = require("typemoq");
+const PaketDownloadUrlResolver_1 = require("../PaketDownloadUrlResolver");
 'use strict';
 const assert = require('assert');
 describe('L0', () => {
@@ -41,7 +41,7 @@ describe('L0', () => {
             it('creates an instance when http is passed.', function (done) {
                 //arrange
                 //act
-                let url = new PaketDownloadUrl_1.PaketDownloadUrl(httpMock.object);
+                let url = new PaketDownloadUrlResolver_1.PaketDownloadUrlResolver(httpMock.object);
                 //assert
                 chai_1.expect(url).to.not.equal(null);
                 done();
@@ -50,7 +50,7 @@ describe('L0', () => {
         describe('resolve', function () {
             let sut;
             beforeEach(() => {
-                sut = new PaketDownloadUrl_1.PaketDownloadUrl(httpMock.object);
+                sut = new PaketDownloadUrlResolver_1.PaketDownloadUrlResolver(httpMock.object);
             });
             describe("when no version is supplied", function () {
                 it('uses Paket github repository to resolve latest version', function () {
@@ -143,7 +143,7 @@ describe('L0', () => {
                         //act
                         let actualDownloadUrl = yield sut.resolve(expectedVersion);
                         //assert
-                        chai_1.expect(actualDownloadUrl).to.equal(expectedDownloadUrl);
+                        chai_1.expect(actualDownloadUrl.url).to.equal(expectedDownloadUrl);
                     });
                 });
                 it('returns download URL for the latest version of paket.exe when no version is supplied', function () {
@@ -156,7 +156,7 @@ describe('L0', () => {
                         //act
                         let actualDownloadUrl = yield sut.resolve(noVersion);
                         //assert
-                        chai_1.expect(actualDownloadUrl).to.equal(expectedDownloadUrl);
+                        chai_1.expect(actualDownloadUrl.url).to.equal(expectedDownloadUrl);
                     });
                 });
             });
