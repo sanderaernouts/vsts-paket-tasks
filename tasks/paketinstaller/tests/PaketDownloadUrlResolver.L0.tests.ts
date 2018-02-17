@@ -5,6 +5,7 @@ import http = require("http");
 import { expect } from 'chai';
 import * as TypeMoq from "typemoq";
 import { debug } from "util";
+import { PaketDownloadUrlResolver } from '../PaketDownloadUrlResolver';
 
 
 'use strict';
@@ -48,7 +49,7 @@ describe('L0', () => {
             it('creates an instance when http is passed.', function(done: MochaDone) {
                 //arrange
                 //act
-                let url = new PaketDownloadUrl(httpMock.object)
+                let url = new PaketDownloadUrlResolver(httpMock.object)
 
                 //assert
                 expect(url).to.not.equal(null);
@@ -57,10 +58,10 @@ describe('L0', () => {
         });
 
         describe ('resolve', function() {
-            let sut:PaketDownloadUrl;
+            let sut:PaketDownloadUrlResolver;
 
             beforeEach(() =>  {
-                sut = new PaketDownloadUrl(httpMock.object)
+                sut = new PaketDownloadUrlResolver(httpMock.object)
             });
 
             describe("when no version is supplied", function() {
@@ -157,13 +158,13 @@ describe('L0', () => {
                 it('returns download URL for the supplied version of paket.exe when version is supplied', async function() {
                     //arrange
                     let expectedVersion = "4.8.23";
-                    let expectedDownloadUrl = `https://github.com/fsprojects/Paket/download/${expectedVersion}/paket.exe`
+                    let expectedDownloadUrl = `https://github.com/fsprojects/Paket/download/${expectedVersion}/paket.exe`;
                     
                     //act
-                    let actualDownloadUrl:string = await sut.resolve(expectedVersion);
+                    let actualDownloadUrl = await sut.resolve(expectedVersion);
 
                     //assert
-                    expect(actualDownloadUrl).to.equal(expectedDownloadUrl);
+                    expect(actualDownloadUrl.url).to.equal(expectedDownloadUrl);
                 }); 
 
                 it('returns download URL for the latest version of paket.exe when no version is supplied', async function() {
@@ -175,10 +176,10 @@ describe('L0', () => {
 
                     getResponseMock.setup(x => x.readBody()).returns(() => Promise.resolve(`{"tag_name":"${expectedVersion}"}`));
                     //act
-                    let actualDownloadUrl:string = await sut.resolve(noVersion);
+                    let actualDownloadUrl = await sut.resolve(noVersion);
 
                     //assert
-                    expect(actualDownloadUrl).to.equal(expectedDownloadUrl);
+                    expect(actualDownloadUrl.url).to.equal(expectedDownloadUrl);
                 }); 
             });
         });

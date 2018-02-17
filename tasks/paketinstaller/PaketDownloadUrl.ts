@@ -1,44 +1,9 @@
-import * as ifm from 'typed-rest-client/Interfaces';
-import * as httpm from 'typed-rest-client/HttpClient';
-import { IPaketDownloadUrl } from './IPaketDownloadUrl';
-
-export class PaketDownloadUrl implements IPaketDownloadUrl {
-    private repositoryUrl:string = "https://github.com/fsprojects/Paket";
-    private latestPath:string = "releases/latest";
-    private http:ifm.IHttpClient;
-    
-    constructor(http:ifm.IHttpClient) {
-        this.http = http;
+export class PaketDownloadUrl {
+    constructor (version:string,  url:string) {
+        this.version = version;
+        this.url = url;
     }
 
-    async resolve(versionSpec:string|undefined): Promise<string> {
-
-        let version:string;
-
-        if(!versionSpec) {
-            version = await this.getLatestVersion();
-        }else{
-            version = versionSpec;
-        }
-
-        return `${this.repositoryUrl}/download/${version}/paket.exe`
-    }
-
-    private async getLatestVersion():Promise<string> {
-        let headers = {
-            accept: "application/json"
-        } as ifm.IHeaders;
-
-        let url = `${this.repositoryUrl}/releases/latest`;
-        let response: httpm.HttpClientResponse = await this.http.get(url, headers);
-
-        if(!response.message.statusCode || response.message.statusCode >= 400)  {
-            throw Error(`Failed to get latest version information for Paket from "${url}". Code(${response.message.statusCode}) Message(${response.message.statusMessage})`)
-        }
-
-        let body: string = await response.readBody();
-        let obj:any = JSON.parse(body);
-
-        return obj.tag_name
-    }
+    url:string;
+    version:string;
 }
